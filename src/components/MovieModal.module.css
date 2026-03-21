@@ -1,0 +1,244 @@
+.overlay {
+  position: fixed; inset: 0; z-index: 400;
+  background: rgba(5,5,7,0.88);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.modal {
+  width: 100%; max-width: 900px;
+  background: var(--surface);
+  border: 1px solid var(--border-lit);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  max-height: calc(100vh - 3rem);
+  display: flex; flex-direction: column;
+}
+
+/* ── Backdrop / trailer header ────────────────────────────────────────────── */
+.backdropWrap {
+  position: relative; height: 320px; flex-shrink: 0;
+  overflow: hidden;          /* clips the oversized ytTarget */
+  background: #000;          /* no flash while trailer loads */
+}
+
+.backdropImg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover; object-position: center 25%;
+  display: block;
+}
+
+/*
+  Trailer wrapper inside the modal header.
+  Same technique as the hero: oversized ytTarget, centered.
+*/
+.trailerWrap {
+  position: absolute; inset: 0;
+  opacity: 0; transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+.trailerVisible { opacity: 1; }
+
+/* The div YT replaces with an iframe */
+.ytTarget {
+  position: absolute;
+  top: 50%; left: 50%;
+  /* Cover the header in both portrait and landscape orientations */
+  width: max(100%, 177.78vh);
+  height: max(100%, 56.25vw);
+  transform: translate(-50%, -50%);
+}
+.ytTarget iframe,
+.ytTarget > div {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+}
+
+.backdropGradient {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(5,5,7,0.2) 0%, var(--surface) 100%);
+  pointer-events: none;
+}
+
+/* ── Header controls (close + mute) ──────────────────────────────────────── */
+.headerControls {
+  position: absolute; top: 1rem; right: 1rem; z-index: 10;
+  display: flex; gap: 0.5rem; align-items: center;
+}
+.muteBtn {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(5,5,7,0.7); border: 1px solid var(--border);
+  color: var(--white); font-size: 14px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.muteBtn:hover { background: rgba(5,5,7,0.95); }
+.closeBtn {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(5,5,7,0.7); border: 1px solid var(--border);
+  color: var(--white); font-size: 12px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.closeBtn:hover { background: rgba(5,5,7,0.95); }
+
+/* ── Bottom backdrop actions ──────────────────────────────────────────────── */
+.backdropActions {
+  position: absolute; bottom: 1rem; left: 1.5rem; z-index: 10;
+  display: flex; gap: 0.6rem; align-items: center;
+}
+.watchBtn {
+  padding: 0.5rem 1.2rem;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
+  background: var(--amber); color: var(--black);
+  border: none; border-radius: 1px; cursor: pointer;
+  transition: opacity 0.2s;
+}
+.watchBtn:hover { opacity: 0.88; }
+.watchlistBtn {
+  padding: 0.45rem 1rem;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
+  border: 1px solid var(--border-lit); color: var(--white);
+  background: rgba(5,5,7,0.6); border-radius: 1px; cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.watchlistBtn:hover { background: rgba(255,255,255,0.1); }
+.watchlistBtnActive { border-color: #6fcf97; color: #6fcf97; }
+
+/* ── Body ─────────────────────────────────────────────────────────────────── */
+.body { overflow-y: auto; flex: 1; }
+.bodyInner {
+  display: grid; grid-template-columns: 160px 1fr;
+  gap: 2rem; padding: 1.5rem 2rem 2.5rem;
+}
+
+/* ── Poster col ───────────────────────────────────────────────────────────── */
+.posterCol { flex-shrink: 0; margin-top: -90px; position: relative; z-index: 2; }
+.poster {
+  width: 100%; aspect-ratio: 2/3; object-fit: cover;
+  border-radius: 2px; border: 1px solid var(--border);
+  display: block;
+}
+.posterFallback {
+  width: 100%; aspect-ratio: 2/3; background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 2.5rem; color: var(--dim);
+}
+
+/* ── Info col ─────────────────────────────────────────────────────────────── */
+.infoCol { display: flex; flex-direction: column; gap: 1.1rem; padding-top: 0.5rem; min-width: 0; }
+
+.titleRow { display: flex; align-items: flex-start; gap: 0.75rem; flex-wrap: wrap; }
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 300; line-height: 1.1; letter-spacing: -0.02em;
+}
+.watchedPill {
+  flex-shrink: 0; align-self: center;
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em;
+  color: #6fcf97; border: 1px solid rgba(111,207,151,0.3);
+  padding: 3px 8px; border-radius: 1px; margin-top: 6px;
+}
+
+.metaRow { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.metaChip {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em;
+  color: var(--muted); background: var(--surface-2);
+  padding: 3px 8px; border-radius: 1px; border: 1px solid var(--border);
+}
+
+.genreRow { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.genreTag {
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--amber); border: 1px solid rgba(212,148,58,0.25);
+  padding: 2px 7px; border-radius: 1px;
+}
+
+.overview {
+  font-size: 13px; line-height: 1.8; color: rgba(240,238,232,0.75);
+  max-width: 560px;
+}
+
+/* ── Cast ─────────────────────────────────────────────────────────────────── */
+.castSection { display: flex; flex-direction: column; gap: 0.6rem; }
+.castLabel {
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--muted);
+}
+.castScroll {
+  display: flex; gap: 0.75rem; overflow-x: auto;
+  padding-bottom: 0.25rem;
+  scrollbar-width: thin; scrollbar-color: var(--dim) transparent;
+}
+.castMember {
+  flex-shrink: 0; width: 64px;
+  display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+}
+.castImg {
+  width: 48px; height: 48px; border-radius: 50%; object-fit: cover;
+  border: 1px solid var(--border);
+}
+.castImgFallback {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--surface-2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 1.2rem; color: var(--dim);
+}
+.castName {
+  font-size: 9px; color: var(--white); text-align: center;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;
+}
+.castChar {
+  font-size: 8px; color: var(--muted); text-align: center;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;
+}
+
+/* ── Rate section ─────────────────────────────────────────────────────────── */
+.rateSection { display: flex; flex-direction: column; gap: 0.6rem; }
+.rateLabel {
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--muted);
+}
+.rateButtons { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.rateBtn {
+  display: flex; flex-direction: column; align-items: center; gap: 0.2rem;
+  padding: 0.55rem 0.75rem; background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: 2px;
+  cursor: pointer; transition: border-color 0.2s, background 0.2s;
+  min-width: 64px;
+}
+.rateBtn:hover { border-color: var(--amber); background: var(--amber-dim); }
+.rateBtnActive { border-color: var(--amber) !important; background: var(--amber-dim) !important; }
+.rateBtnEmoji { font-size: 1.2rem; line-height: 1; }
+.rateBtnLabel { font-size: 9px; color: var(--muted); letter-spacing: 0.04em; }
+.rateDone { font-size: 12px; color: #6fcf97; font-family: var(--font-mono); }
+
+/* ── Skeleton ─────────────────────────────────────────────────────────────── */
+.skeleton { display: flex; flex-direction: column; gap: 0.75rem; padding-top: 0.5rem; }
+.skLine {
+  background: var(--surface-2); border-radius: 2px; animation: pulse 1.4s ease-in-out infinite;
+}
+.skTitle { height: 36px; width: 70%; }
+.skMeta  { height: 18px; width: 50%; }
+.skBody  { height: 14px; width: 100%; }
+.skBodyShort { height: 14px; width: 60%; }
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .overlay { padding: 0; align-items: flex-end; }
+  .modal { max-width: 100%; border-radius: 4px 4px 0 0; max-height: 92vh; }
+  .backdropWrap { height: 240px; }
+  .bodyInner { grid-template-columns: 1fr; padding: 1rem 1.25rem 2rem; }
+  .posterCol { display: none; }
+}
