@@ -1,0 +1,45 @@
+.overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.92);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem;
+}
+.modal {
+  width: 100%; max-width: 900px;
+  background: var(--surface); border: 1px solid var(--border-lit);
+  border-radius: 4px; overflow: hidden;
+}
+.header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.75rem 1rem; border-bottom: 1px solid var(--border);
+}
+.title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 400; color: var(--white); }
+.controls { display: flex; gap: 0.5rem; align-items: center; }
+.muteBtn, .closeBtn {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(255,255,255,0.08); border: 1px solid var(--border);
+  color: var(--white); font-size: 12px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.muteBtn:hover, .closeBtn:hover { background: rgba(255,255,255,0.15); }
+
+.playerWrap {
+  position: relative; width: 100%; aspect-ratio: 16/9; background: #000;
+}
+.ytTarget { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ytTarget iframe { width: 100% !important; height: 100% !important; border: none; }
+
+.placeholder {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.placeholderText {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.1em; color: var(--muted);
+}
+
+@media (max-width: 768px) {
+  .overlay { padding: 0; align-items: flex-end; }
+  .modal { border-radius: 8px 8px 0 0; max-height: 80vh; }
+}

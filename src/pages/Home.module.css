@@ -1,0 +1,254 @@
+.shell { min-height: 100vh; background: var(--void); }
+
+/* ── Nav ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 2.5rem;
+  background: linear-gradient(to bottom, rgba(5,5,7,0.95) 0%, transparent 100%);
+}
+.navLogo { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.25em; color: var(--white); }
+.navLinks { display: flex; gap: 1.5rem; }
+.navLink {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); background: none; border: none; cursor: pointer; transition: color 0.2s;
+}
+.navLink:hover { color: var(--white); }
+.navRight { position: relative; }
+.navAvatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--amber); color: var(--black);
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border: none;
+}
+.userMenu {
+  position: absolute; top: calc(100% + 10px); right: 0; width: 210px;
+  background: var(--surface-2); border: 1px solid var(--border-lit);
+  border-radius: 3px; overflow: hidden; z-index: 200;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.userMenuName  { font-size: 13px; color: var(--white); padding: 0.9rem 1rem 0.1rem; }
+.userMenuEmail { font-size: 10px; color: var(--muted); padding: 0 1rem 0.75rem; overflow: hidden; text-overflow: ellipsis; }
+.userMenuDivider { height: 1px; background: var(--border); }
+.userMenuItem {
+  display: block; width: 100%; text-align: left; padding: 0.65rem 1rem;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); background: none; border: none; cursor: pointer; transition: background 0.15s, color 0.15s;
+}
+.userMenuItem:hover { background: var(--surface-3); color: var(--white); }
+.userMenuItemDanger {
+  display: block; width: 100%; text-align: left; padding: 0.65rem 1rem;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: #e05252; background: none; border: none; cursor: pointer;
+}
+.userMenuItemDanger:hover { background: rgba(224,82,82,0.08); }
+
+/* ── Hero desktop ── */
+.hero {
+  position: relative; height: 85vh; min-height: 500px; overflow: hidden; background: var(--void);
+}
+.heroBgBlur {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center 20%;
+}
+.heroPosterWrap {
+  position: absolute; top: 0; right: 0; height: 100%; width: 42%; overflow: hidden;
+}
+.heroPoster { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+.heroPosterGradient {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, var(--void) 0%, transparent 60%);
+}
+.heroGradient {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    linear-gradient(to right, rgba(5,5,7,0.98) 40%, rgba(5,5,7,0.1) 100%),
+    linear-gradient(to top, var(--void) 0%, transparent 40%);
+}
+.heroContent {
+  position: absolute; bottom: 14%; left: 5%; z-index: 2;
+  max-width: 480px; display: flex; flex-direction: column; gap: 1rem;
+}
+.heroBadge { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.tag {
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--amber); border: 1px solid rgba(212,148,58,0.3); padding: 2px 8px; border-radius: 1px;
+}
+.tagWatched { color: var(--green); border-color: rgba(111,207,151,0.3); }
+.heroTitle {
+  font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 300; line-height: 1.0; letter-spacing: -0.02em;
+}
+.heroCtas { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; margin-top: 0.25rem; }
+.btnPlay {
+  padding: 0.65rem 1.6rem; background: var(--white); color: var(--black);
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; font-weight: 600;
+  border-radius: 2px; cursor: pointer; border: none; transition: opacity 0.2s;
+}
+.btnPlay:hover { opacity: 0.88; }
+.btnTrailer {
+  padding: 0.65rem 1.4rem; background: rgba(255,255,255,0.15); color: var(--white);
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+  border-radius: 2px; cursor: pointer; border: none; backdrop-filter: blur(4px); transition: background 0.2s;
+}
+.btnTrailer:hover { background: rgba(255,255,255,0.25); }
+.btnList {
+  padding: 0.65rem 1.2rem; border: 1px solid rgba(255,255,255,0.4); color: var(--white);
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+  border-radius: 2px; cursor: pointer; background: transparent; transition: all 0.2s;
+}
+.btnList:hover { background: rgba(255,255,255,0.1); }
+.btnListActive { background: var(--amber) !important; border-color: var(--amber) !important; color: var(--black) !important; }
+
+.slideArrow {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(5,5,7,0.5); border: 1px solid var(--border);
+  color: var(--white); font-size: 1.8rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; line-height: 1;
+}
+.slideArrow:hover { background: rgba(5,5,7,0.85); }
+.slideArrowLeft  { left: 1.5rem; }
+.slideArrowRight { right: 1.5rem; }
+.slideDots {
+  position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 5px; z-index: 3;
+}
+.slideDot {
+  width: 5px; height: 5px; border-radius: 50%; border: none; padding: 0;
+  background: rgba(240,238,232,0.3); cursor: pointer; transition: all 0.3s;
+}
+.slideDotActive { background: var(--white); transform: scale(1.4); }
+
+/* ── Shelves ── */
+.main { padding: 2rem 0 4rem; display: flex; flex-direction: column; gap: 2rem; }
+.shelfLabel {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; padding: 0 2.5rem;
+}
+.shelfScroll {
+  display: flex; gap: 8px; overflow-x: auto; padding: 4px 2.5rem 8px;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.shelfScroll::-webkit-scrollbar { display: none; }
+
+/* ── Card ── */
+.card { flex-shrink: 0; width: 160px; cursor: pointer; }
+.cardPoster {
+  position: relative; aspect-ratio: 2/3; overflow: hidden;
+  border-radius: 4px; background: var(--surface); border: 1px solid var(--border);
+}
+.cardImg { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s; }
+.card:hover .cardImg { transform: scale(1.04); }
+.cardPlaceholder {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 2rem; color: var(--dim);
+}
+.cardOverlay {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.75);
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+  padding: 0.6rem; gap: 0.5rem; border-radius: 4px;
+}
+.cardSynopsis {
+  font-size: 9px; line-height: 1.5; color: rgba(240,238,232,0.8); text-align: left; width: 100%;
+}
+.cardButtons { display: flex; gap: 0.4rem; }
+.cardPlay {
+  width: 32px; height: 32px; background: var(--white); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--black); cursor: pointer; border: none;
+}
+.cardSave {
+  width: 32px; height: 32px; background: rgba(255,255,255,0.15); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: var(--white); cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+.cardSaveActive { background: var(--amber) !important; border-color: var(--amber) !important; color: var(--black) !important; font-size: 11px !important; }
+.cardSaveBtn {
+  position: absolute; top: 6px; right: 6px;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: rgba(5,5,7,0.7); border: 1px solid rgba(255,255,255,0.2);
+  color: var(--white); font-size: 13px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 2; opacity: 0; transition: opacity 0.2s;
+}
+.card:hover .cardSaveBtn { opacity: 1; }
+.cardSaveBtnActive { opacity: 1 !important; background: var(--amber) !important; border-color: var(--amber) !important; color: var(--black) !important; font-size: 10px !important; }
+.matchBadge {
+  position: absolute; top: 6px; left: 6px; font-size: 9px;
+  color: var(--amber); background: rgba(5,5,7,0.85); padding: 2px 5px; border-radius: 2px;
+}
+.watchedBadge {
+  position: absolute; bottom: 6px; right: 6px; font-size: 10px;
+  color: var(--green); background: rgba(5,5,7,0.85); padding: 2px 5px; border-radius: 2px;
+}
+.cardMeta { display: flex; justify-content: space-between; align-items: baseline; margin-top: 5px; gap: 4px; }
+.cardTitle { font-size: 11px; color: var(--white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
+.cardYear  { font-size: 10px; color: var(--muted); flex-shrink: 0; }
+
+/* ── Loading ── */
+.loading { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+.loadingText { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.3em; color: var(--muted); }
+
+/* ════════════════════════════
+   MOBILE ≤ 768px
+════════════════════════════ */
+@media (max-width: 768px) {
+  .nav { padding: 0.75rem 1rem; }
+  .navLinks { display: none; }
+  .navLogo { font-size: 10px; }
+
+  /* Hero becomes a portrait card — no fixed height */
+  .hero { height: auto; min-height: unset; overflow: visible; background: transparent; display: flex; flex-direction: column; }
+  .heroBgBlur { display: none; }
+  .heroGradient { display: none; }
+
+  /* Poster: full width, portrait */
+  .heroPosterWrap {
+    position: relative; width: 100%; height: auto;
+    aspect-ratio: 2/3; max-height: 80vw; overflow: hidden; border-radius: 0;
+  }
+  .heroPoster { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .heroPosterGradient {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(5,5,7,1) 0%, rgba(5,5,7,0.5) 35%, transparent 65%);
+  }
+
+  /* Content below poster */
+  .heroContent {
+    position: relative; bottom: unset; left: unset; max-width: 100%;
+    padding: 0.6rem 1rem 0.25rem; gap: 0.5rem; background: var(--void); z-index: 2;
+  }
+  .heroTitle { font-size: clamp(1.3rem, 5vw, 1.7rem); }
+  .heroCtas { gap: 0.4rem; }
+  .btnPlay    { padding: 0.5rem 1rem; font-size: 10px; }
+  .btnTrailer { padding: 0.5rem 0.9rem; font-size: 10px; }
+  .btnList    { padding: 0.5rem 0.85rem; font-size: 10px; }
+
+  /* Dots below content */
+  .slideDots { position: relative; bottom: unset; left: unset; transform: none; justify-content: center; padding: 0.5rem 0 0; background: var(--void); }
+  .slideArrow { display: none; }
+
+  /* Shelves */
+  .main { padding: 0.75rem 0 5rem; gap: 1.25rem; }
+  .shelfLabel { padding: 0 1rem; font-size: 9px; margin-bottom: 0.4rem; }
+  .shelfScroll { padding: 2px 1rem 4px; gap: 6px; }
+
+  /* 3 cards visible: (100vw - 2rem padding - 2×6px gaps) / 3 */
+  .card { width: calc((100vw - 2rem - 12px) / 3); }
+  .cardTitle { font-size: 9px; }
+  .cardYear  { font-size: 8px; }
+  .cardMeta  { margin-top: 3px; }
+
+  /* Save btn always visible on mobile */
+  .cardSaveBtn { opacity: 1; width: 20px; height: 20px; font-size: 11px; top: 4px; right: 4px; }
+
+  /* No hover effects on mobile */
+  .cardOverlay { display: none; }
+  .cardPlay    { display: none; }
+  .cardSave    { display: none; }
+  .card:hover .cardImg { transform: none; }
+  .card:hover .cardSaveBtn { opacity: 1; }
+}
