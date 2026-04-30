@@ -44,13 +44,12 @@
 }
 .userMenuItemDanger:hover { background: rgba(224,82,82,0.08); }
 
-/* ── Hero desktop ── */
+/* ── Hero — DESKTOP ── */
 .hero {
   position: relative; height: 85vh; min-height: 500px; overflow: hidden; background: var(--void);
 }
 .heroBgBlur {
-  position: absolute; inset: 0;
-  background-size: cover; background-position: center 20%;
+  position: absolute; inset: 0; background-size: cover; background-position: center 20%;
 }
 .heroPosterWrap {
   position: absolute; top: 0; right: 0; height: 100%; width: 42%; overflow: hidden;
@@ -81,12 +80,12 @@
   font-weight: 300; line-height: 1.0; letter-spacing: -0.02em;
 }
 .heroCtas { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; margin-top: 0.25rem; }
-.btnPlay {
-  padding: 0.65rem 1.6rem; background: var(--white); color: var(--black);
+.btnInfo {
+  padding: 0.65rem 1.4rem; background: var(--white); color: var(--black);
   font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; font-weight: 600;
   border-radius: 2px; cursor: pointer; border: none; transition: opacity 0.2s;
 }
-.btnPlay:hover { opacity: 0.88; }
+.btnInfo:hover { opacity: 0.88; }
 .btnTrailer {
   padding: 0.65rem 1.4rem; background: rgba(255,255,255,0.15); color: var(--white);
   font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
@@ -146,13 +145,10 @@
   font-family: var(--font-display); font-size: 2rem; color: var(--dim);
 }
 .cardOverlay {
-  position: absolute; inset: 0; background: rgba(0,0,0,0.75);
-  display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
-  padding: 0.6rem; gap: 0.5rem; border-radius: 4px;
+  position: absolute; inset: 0; background: rgba(0,0,0,0.75); border-radius: 4px;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 0.6rem; gap: 0.5rem;
 }
-.cardSynopsis {
-  font-size: 9px; line-height: 1.5; color: rgba(240,238,232,0.8); text-align: left; width: 100%;
-}
+.cardSynopsis { font-size: 9px; line-height: 1.5; color: rgba(240,238,232,0.8); text-align: left; width: 100%; }
 .cardButtons { display: flex; gap: 0.4rem; }
 .cardPlay {
   width: 32px; height: 32px; background: var(--white); border-radius: 50%;
@@ -162,15 +158,13 @@
 .cardSave {
   width: 32px; height: 32px; background: rgba(255,255,255,0.15); border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 14px; color: var(--white); cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.3);
+  font-size: 14px; color: var(--white); cursor: pointer; border: 1px solid rgba(255,255,255,0.3);
 }
 .cardSaveActive { background: var(--amber) !important; border-color: var(--amber) !important; color: var(--black) !important; font-size: 11px !important; }
 .cardSaveBtn {
-  position: absolute; top: 6px; right: 6px;
-  width: 24px; height: 24px; border-radius: 50%;
+  position: absolute; top: 6px; right: 6px; width: 24px; height: 24px; border-radius: 50%;
   background: rgba(5,5,7,0.7); border: 1px solid rgba(255,255,255,0.2);
-  color: var(--white); font-size: 13px; font-weight: 600;
+  color: var(--white); font-size: 13px; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer; z-index: 2; opacity: 0; transition: opacity 0.2s;
 }
@@ -194,49 +188,80 @@
 
 /* ════════════════════════════
    MOBILE ≤ 768px
+   Hero = bigger card tile, no Play button
 ════════════════════════════ */
 @media (max-width: 768px) {
   .nav { padding: 0.75rem 1rem; }
   .navLinks { display: none; }
   .navLogo { font-size: 10px; }
 
-  /* Hero becomes a portrait card — no fixed height */
-  .hero { height: auto; min-height: unset; overflow: visible; background: transparent; display: flex; flex-direction: column; }
+  /* ── Hero: portrait tile ── */
+  .hero {
+    height: auto; min-height: unset;
+    overflow: visible; background: transparent;
+    display: flex; flex-direction: column;
+    margin: 0 1rem; margin-top: 56px; /* below nav */
+    border-radius: 8px; overflow: hidden;
+    position: relative;
+  }
+
   .heroBgBlur { display: none; }
   .heroGradient { display: none; }
 
-  /* Poster: full width, portrait */
+  /* Full-width portrait poster tile */
   .heroPosterWrap {
     position: relative; width: 100%; height: auto;
-    aspect-ratio: 2/3; max-height: 80vw; overflow: hidden; border-radius: 0;
+    aspect-ratio: 2/3; max-height: 65vw; overflow: hidden;
+    border-radius: 8px;
   }
   .heroPoster { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+
+  /* Gradient over bottom of poster for text */
   .heroPosterGradient {
     position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(5,5,7,1) 0%, rgba(5,5,7,0.5) 35%, transparent 65%);
+    background: linear-gradient(
+      to top,
+      rgba(5,5,7,1) 0%,
+      rgba(5,5,7,0.75) 30%,
+      rgba(5,5,7,0.2) 60%,
+      transparent 80%
+    );
   }
 
-  /* Content below poster */
+  /* Content overlaid on bottom of poster */
   .heroContent {
-    position: relative; bottom: unset; left: unset; max-width: 100%;
-    padding: 0.6rem 1rem 0.25rem; gap: 0.5rem; background: var(--void); z-index: 2;
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 1rem;
+    gap: 0.4rem;
+    z-index: 2;
+    max-width: 100%;
   }
-  .heroTitle { font-size: clamp(1.3rem, 5vw, 1.7rem); }
-  .heroCtas { gap: 0.4rem; }
-  .btnPlay    { padding: 0.5rem 1rem; font-size: 10px; }
-  .btnTrailer { padding: 0.5rem 0.9rem; font-size: 10px; }
-  .btnList    { padding: 0.5rem 0.85rem; font-size: 10px; }
 
-  /* Dots below content */
-  .slideDots { position: relative; bottom: unset; left: unset; transform: none; justify-content: center; padding: 0.5rem 0 0; background: var(--void); }
+  .heroTitle { font-size: clamp(1.1rem, 4.5vw, 1.5rem); line-height: 1.1; }
+  .heroBadge { gap: 0.3rem; }
+  .tag { font-size: 9px; padding: 1px 6px; }
+
+  .heroCtas { gap: 0.4rem; margin-top: 0.1rem; }
+  /* More info + Trailer only — no Play */
+  .btnInfo    { padding: 0.45rem 0.9rem; font-size: 9px; }
+  .btnTrailer { padding: 0.45rem 0.9rem; font-size: 9px; }
+  .btnList    { padding: 0.45rem 0.8rem; font-size: 9px; }
+
+  /* Dots below the tile */
+  .slideDots {
+    position: relative; bottom: unset; left: unset; transform: none;
+    justify-content: center; padding: 0.6rem 0 0.25rem;
+    background: var(--void);
+  }
   .slideArrow { display: none; }
 
-  /* Shelves */
-  .main { padding: 0.75rem 0 5rem; gap: 1.25rem; }
+  /* ── Shelves ── */
+  .main { padding: 1rem 0 5rem; gap: 1.25rem; margin-top: 0.5rem; }
   .shelfLabel { padding: 0 1rem; font-size: 9px; margin-bottom: 0.4rem; }
   .shelfScroll { padding: 2px 1rem 4px; gap: 6px; }
 
-  /* 3 cards visible: (100vw - 2rem padding - 2×6px gaps) / 3 */
+  /* 3 cards: (100vw - 2rem padding - 2×6px gaps) / 3 */
   .card { width: calc((100vw - 2rem - 12px) / 3); }
   .cardTitle { font-size: 9px; }
   .cardYear  { font-size: 8px; }
@@ -245,10 +270,9 @@
   /* Save btn always visible on mobile */
   .cardSaveBtn { opacity: 1; width: 20px; height: 20px; font-size: 11px; top: 4px; right: 4px; }
 
-  /* No hover effects on mobile */
+  /* No hover on mobile */
   .cardOverlay { display: none; }
   .cardPlay    { display: none; }
   .cardSave    { display: none; }
   .card:hover .cardImg { transform: none; }
-  .card:hover .cardSaveBtn { opacity: 1; }
 }
