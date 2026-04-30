@@ -9,6 +9,7 @@ import Watchlist  from './pages/Watchlist'
 import Search     from './pages/Search'
 import BottomNav  from './components/BottomNav'
 
+
 function ProtectedRoute({ children }) {
   const { currentUser, onboardingDone } = useStore()
   if (!currentUser) return <Navigate to="/auth" replace />
@@ -48,6 +49,7 @@ export default function AppRouter() {
         <Route path="/watchlist"  element={<ProtectedRoute><Watchlist /></ProtectedRoute>} />
         <Route path="/search"     element={<ProtectedRoute><Search /></ProtectedRoute>} />
         <Route path="*"           element={<Navigate to="/" replace />} />
+        <Route path="/welcome"    element={<Welcome />} />
       </Routes>
       <BottomNav />
     </BrowserRouter>
