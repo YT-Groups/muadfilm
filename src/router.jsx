@@ -8,7 +8,7 @@ import Profile    from './pages/Profile'
 import Watchlist  from './pages/Watchlist'
 import Search     from './pages/Search'
 import BottomNav  from './components/BottomNav'
-
+import Welcome from './pages/Welcome'
 
 function ProtectedRoute({ children }) {
   const { currentUser, onboardingDone } = useStore()
