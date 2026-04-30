@@ -194,7 +194,7 @@ const useStore = create((set, get) => {
     signup: async (email, displayName, password) => {
       set({ authError: null })
       if (isSupabaseEnabled) {
-        const { error } = await supabase.auth.signUp({ email, password, options: { data: { displayName } } })
+        const { error } = await supabase.auth.signUp({ email, password, options: { data: { displayName }, emailRedirectTo: `${window.location.origin}/welcome` } })
         if (error) { set({ authError: error.message }); return false }
         return true
       } else {

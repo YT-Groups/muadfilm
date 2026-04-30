@@ -11,15 +11,16 @@ export default function Auth() {
   const [params] = useSearchParams()
   const initialMode = params.get('mode') === 'signup' ? 'signup' : 'login'
 
-  const [mode, setMode]             = useState(initialMode)
-  const [email, setEmail]           = useState('')
+  const [mode, setMode]               = useState(initialMode)
+  const [email, setEmail]             = useState('')
   const [displayName, setDisplayName] = useState('')
-  const [password, setPassword]     = useState('')
-  const [confirmPw, setConfirmPw]   = useState('')
-  const [loading, setLoading]       = useState(false)
-  const [localError, setLocalError] = useState(null)
-  const [resetSent, setResetSent]   = useState(false)
-  const [showReset, setShowReset]   = useState(false)
+  const [password, setPassword]       = useState('')
+  const [confirmPw, setConfirmPw]     = useState('')
+  const [loading, setLoading]         = useState(false)
+  const [localError, setLocalError]   = useState(null)
+  const [resetSent, setResetSent]     = useState(false)
+  const [showReset, setShowReset]     = useState(false)
+  const [confirmationSent, setConfirmationSent] = useState(false) // ← new
 
   const { login, signup, authError, clearAuthError, currentUser, onboardingDone, sendPasswordReset } = useStore()
 
@@ -27,7 +28,7 @@ export default function Auth() {
     if (currentUser) navigate(onboardingDone ? '/home' : '/onboarding', { replace: true })
   }, [currentUser])
 
-  useEffect(() => { clearAuthError(); setLocalError(null); setShowReset(false) }, [mode])
+  useEffect(() => { clearAuthError(); setLocalError(null); setShowReset(false); setConfirmationSent(false) }, [mode])
 
   const error = localError || authError
 
@@ -49,11 +50,12 @@ export default function Auth() {
     setLoading(false)
 
     if (success) {
-      // For Supabase: onAuthStateChange handles redirect
-      // For mock: navigate manually
       if (!isSupabaseEnabled) {
         navigate(mode === 'signup' ? '/onboarding' : '/home', { replace: true })
+      } else if (mode === 'signup') {
+        setConfirmationSent(true) // ← show check-your-email screen
       }
+      // login: onAuthStateChange handles the redirect
     }
   }
 
@@ -66,6 +68,30 @@ export default function Auth() {
     else setResetSent(true)
   }
 
+  // ── Confirmation screen ───────────────────────────────────────────────────────
+  if (confirmationSent) {
+    return (
+      <div className={styles.shell}>
+        <div className={styles.blob1} />
+        <div className={styles.blob2} />
+        <div className={styles.logo}>MUAD'FILM</div>
+        <motion.div className={styles.card} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+          <p className={styles.confirmIcon}>📬</p>
+          <h2 className={styles.confirmTitle}>Check your email</h2>
+          <p className={styles.confirmBody}>
+            We sent a confirmation link to <strong>{email}</strong>.<br />
+            Click it to activate your account and get started.
+          </p>
+          <button className={styles.switchLink} type="button" onClick={() => { setConfirmationSent(false); setMode('login') }}>
+            Back to sign in
+          </button>
+        </motion.div>
+        <p className={styles.footnote}>Secured by Supabase.</p>
+      </div>
+    )
+  }
+
+  // ── Main auth form ────────────────────────────────────────────────────────────
   return (
     <div className={styles.shell}>
       <div className={styles.blob1} />
